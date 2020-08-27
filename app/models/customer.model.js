@@ -1,21 +1,29 @@
-const uuid = require('uuid/v4');
 
 module.exports = (sequelize, Sequelize) => {
-  const Tutorial = sequelize.define("tutorial", {
+  const Tutorial = sequelize.define("customer", {
 
     id: {
       allowNull: false,
       primaryKey: true,
-      type: Sequelize.UUID
+      type: Sequelize.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
-    title: {
+    name: {
       type: Sequelize.STRING
     },
-    description: {
+    license: {
       type: Sequelize.STRING
     },
-    published: {
-      type: Sequelize.BOOLEAN
+    customer: {
+      type: Sequelize.UUID,
+      allowNull: true
+    },
+    licenseID: {
+      type: Sequelize.UUID,
+      allowNull: true
+    },
+    macaddress: {
+      type: Sequelize.STRING
     }
   });
 
