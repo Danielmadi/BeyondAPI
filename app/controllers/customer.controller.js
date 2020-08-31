@@ -24,7 +24,9 @@ exports.create = (req, res) => {
 
     licenseID: req.body.licenseID,
 
-    macaddress: req.body.macaddress
+    macaddress: req.body.macaddress,
+
+    endDate: req.body.endDate
 
   };
 
