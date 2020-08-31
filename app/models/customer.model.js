@@ -24,6 +24,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     macaddress: {
       type: Sequelize.STRING
+    },
+    endDate: {
+      type: Sequelize.DATE
     }
   });
 
