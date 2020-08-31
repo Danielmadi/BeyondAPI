@@ -18,10 +18,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 db.sequelize.sync();
-// // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
+// drop the table if it already exists
+db.sequelize.sync({ alter: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 // simple route
 app.get("/", (req, res) => {
