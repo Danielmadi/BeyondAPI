@@ -16,7 +16,7 @@ exports.findAll = async (req, res) => {
     // make sure that any items are correctly URL encoded in the connection string
    //await sql.connect('Server=192.168.1.147,1433;Database=VBACC0219;User Id=sa;Password=P@ssw0rd;Encrypt=false')
     await sql.connect('Server=aa15pm8bn3sx004.cstvrifq4sia.us-west-2.rds.amazonaws.com,1433;Database=Database;User Id=SCSAdmin;Password=Silicon$$Silicon;Encrypt=false')
-
+sql.pool =5 ;
     const query = `
      select SA_Number from TBM_SUB_ACCOUNT
      ORDER BY SA_Number
