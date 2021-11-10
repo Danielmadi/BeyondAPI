@@ -4,7 +4,9 @@
   "description": "Node.js Rest Apis with Express, Sequelize & M",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-react": "webpack",
+    "build": "gulp build && webpack"
   },
   "keywords": [
     "nodejs",
@@ -17,12 +19,24 @@
   "author": "bezkoder",
   "license": "ISC",
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mssql": "^7.2.1",
     "pg": "^7.17.1",
     "pg-hstore": "^2.3.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "sequelize": "^5.21.3",
-    "uuid": "^8.3.0"
+    "sequelize-msnodesqlv8": "^0.2.6-beta.8",
+    "uuid": "^8.3.0",
+    "webpack": "^4.44.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.12"
   }
 }

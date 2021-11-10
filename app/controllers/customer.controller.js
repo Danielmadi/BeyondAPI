@@ -1,157 +1,59 @@
-const db = require("../models");
-const Customer = db.customers;
-const Op = db.Sequelize.Op;
+const sql = require('mssql')
 
 // Create and Save a new Customer
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
 
-  // Create a Customer
-  const customer = {
-
-
-    name: req.body.name,
-
-    license: req.body.license,
-
-    customer: req.body.customer,
-
-    licenseID: req.body.licenseID,
-
-    macaddress: req.body.macaddress,
-
-    endDate: req.body.endDate
-
-  };
-
-  // Save Customer in the database
-  Customer.create(customer)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Customer."
-      });
-    });
+  
 };
 
 // Retrieve all Customers from the database.
-exports.findAll = (req, res) => {
-  const name = req.query.name;
-  var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
+exports.findAll = async (req, res) => {
+  try {
 
-  Customer.findAll({ where: condition })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Customers."
-      });
-    });
+    const skip = req.params.skip;
+    const take = req.params.take;
+    console.log(req.params);
+    // make sure that any items are correctly URL encoded in the connection string
+   //await sql.connect('Server=192.168.1.147,1433;Database=VBACC0219;User Id=sa;Password=P@ssw0rd;Encrypt=false')
+    await sql.connect('Server=aa15pm8bn3sx004.cstvrifq4sia.us-west-2.rds.amazonaws.com,1433;Database=Database;User Id=SCSAdmin;Password=Silicon$$Silicon;Encrypt=false')
+
+    const query = `
+     select SA_Number from TBM_SUB_ACCOUNT
+     ORDER BY SA_Number
+     OFFSET  ${parseInt(skip)} ROWS
+     FETCH NEXT  ${parseInt(take)} ROWS ONLY`;
+
+
+    const result = await sql.query(query);
+    res.send(result.recordset);
+} catch (err) {
+  console.log(err);
+  res.send(err);
+    // ... error checks
+}
 };
 
 // Find a single Customer with an id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  Customer.findByPk(id)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Customer with id=" + id
-      });
-    });
+ 
 };
 
 // Update a Customer by the id in the request
 exports.update = (req, res) => {
-  const id = req.params.id;
-
-  Customer.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Customer was updated successfully."
-        });
-      } else {
-        res.send({
-          message: `Cannot update Customer with id=${id}. Maybe Customer was not found or req.body is empty!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Customer with id=" + id
-      });
-    });
+ 
 };
 
 // Delete a Customer with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
-
-  Customer.destroy({
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Customer was deleted successfully!"
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Customer with id=${id}. Maybe Customer was not found!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Customer with id=" + id
-      });
-    });
+ 
 };
 
 // Delete all Customers from the database.
 exports.deleteAll = (req, res) => {
-  Customer.destroy({
-    where: {},
-    truncate: false
-  })
-    .then(nums => {
-      res.send({ message: `${nums} Customers were deleted successfully!` });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all Customers."
-      });
-    });
+  
 };
 
 // find all published Customer
 exports.findAllPublished = (req, res) => {
-  Customer.findAll({ where: { published: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Customers."
-      });
-    });
+  
 };
