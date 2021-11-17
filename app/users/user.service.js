@@ -1,6 +1,4 @@
 const sql = require('mssql');
-const crypto = require('crypto');
-const bcrypt = require('bcrypt');
 var passwordHasher = require('aspnet-identity-pw');
 // users hardcoded for simplicity, store in a db for production applications
 //const users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
@@ -10,16 +8,6 @@ module.exports = {
   //  getAll
 };
 
-function dotnet_membership_password_hash(pass, salt)
-{
-  var bytes = new Buffer.from(pass || '', 'utf16le');
-  var src = new Buffer.from(salt || '', 'base64');
-  var dst = new Buffer.from(src.length + bytes.length);
-  src.copy(dst, 0, 0, src.length);
-  bytes.copy(dst, src.length, 0, bytes.length);
-
-  return crypto.createHash('sha1').update(dst).digest('base64');
-}
 
 async function authenticate({ username, password }) {
   const saltRounds = 10;
@@ -44,12 +32,6 @@ const myPlaintextPassword = 's0/\/\P4$$w0rD';
 console.log('daniel');
 var isValid = passwordHasher.validatePassword(password, user.recordset[0].PasswordHash);
   console.log(user.recordset[0].PasswordHash);
-
- // var isValid = passwordHasher.validatePassword(user.recordset[0].PasswordHash, hashedPassword);
-
-     
-    //console.log(isValid);
-  
     if(isValid){
         const { PasswordHash, ...userWithoutPassword } = user.recordset;
         return userWithoutPassword;
@@ -58,9 +40,3 @@ var isValid = passwordHasher.validatePassword(password, user.recordset[0].Passwo
     }
 }
 
-// async function getAll() {
-//     return users.map(u => {
-//         const { password, ...userWithoutPassword } = u;
-//         return userWithoutPassword;
-//     });
-// }
