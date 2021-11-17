@@ -1,21 +1,21 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const basicAuth = require('./app/_helpers/basic-auth');
+const errorHandler = require('./app/_helpers/error-handler');
 
 const app = express();
-
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
-
-app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+// use basic HTTP auth to secure the api
+app.use(basicAuth);
+// api routes
+app.use('./app/users', require('./app/users/users.controller'));
 
+// global error handler
+app.use(errorHandler);
 // const db = require("./app/models");
 //db.sequelize.sync();
 // drop the table if it already exists
@@ -28,7 +28,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Beyond API" });
 });
 
-// require("./app/routes/turorial.routes")(app);
+ require("./app/routes/auth.routes")(app);
+ require("./app/routes/general.routes")(app);
 
 require("./app/routes/customer.routes")(app);
 
