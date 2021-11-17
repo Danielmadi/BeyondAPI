@@ -1,4 +1,6 @@
 const sql = require('mssql');
+const  SQLCON = require('../config/db.config');
+
 var passwordHasher = require('aspnet-identity-pw');
 // users hardcoded for simplicity, store in a db for production applications
 //const users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
@@ -10,11 +12,12 @@ module.exports = {
 
 
 async function authenticate({ username, password }) {
+ 
   const saltRounds = 10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
     console.log(password);
   //  const user = users.find(u => u.username === username && u.password === password);
-    await sql.connect('Server=192.168.1.147,1433;Database=BeyondDataNew;User Id=sa;Password=P@ssw0rd;Encrypt=false')
+    await sql.connect(SQLCON)
     // await sql.connect('Server=aa15pm8bn3sx004.cstvrifq4sia.us-west-2.rds.amazonaws.com,1433;Database=Database;User Id=SCSAdmin;Password=Silicon$$Silicon;Encrypt=false')
  sql.pool =5 ;
      const query = `

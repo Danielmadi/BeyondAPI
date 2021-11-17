@@ -1,5 +1,5 @@
-const sql = require('../config/db.config');
-
+const sql = require('mssql')
+const  SQLCON = require('../config/db.config');
 
 
 exports.findAll = async (req, res) => {
@@ -7,6 +7,10 @@ exports.findAll = async (req, res) => {
 
     const PeriodKey = req.query.PeriodKey;
    
+  
+   await sql.connect(SQLCON)
+   // await sql.connect('Server=aa15pm8bn3sx004.cstvrifq4sia.us-west-2.rds.amazonaws.com,1433;Database=Database;User Id=SCSAdmin;Password=Silicon$$Silicon;Encrypt=false')
+sql.pool =5 ;
     const query = `
     Select  MAX(LD_Id) LDID,
       SUM(VD_Dr)  DR,

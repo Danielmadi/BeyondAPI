@@ -1,6 +1,5 @@
-const sql = require('../config/db.config');
-
-
+const sql = require('mssql')
+const  SQLCON = require('../config/db.config');
 // Create and Save a new Customer
 exports.create = (req, res) => {
 
@@ -14,7 +13,11 @@ exports.findAll = async (req, res) => {
     const skip = req.params.skip;
     const take = req.params.take;
     const book = req.params.book;
- 
+   // console.log(req.params);
+    // make sure that any items are correctly URL encoded in the connection string
+   await sql.connect(SQLCON)
+   // await sql.connect('Server=aa15pm8bn3sx004.cstvrifq4sia.us-west-2.rds.amazonaws.com,1433;Database=Database;User Id=SCSAdmin;Password=Silicon$$Silicon;Encrypt=false')
+sql.pool =5 ;
     const query = `
      select SA_Key,SA_Description,SA_Phones from TBM_SUB_ACCOUNT
      WHERE SA_BOOK = ${book}
