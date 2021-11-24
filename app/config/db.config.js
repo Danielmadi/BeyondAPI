@@ -13,7 +13,7 @@ const SQLCONN =  () =>{
 
 
 let SQLCON = "";
-if(1===1){
+if(1===0){
   SQLCON = "Server=192.168.1.147,1433;Database=BeyondDataNew;User Id=sa;Password=P@ssw0rd;Encrypt=false"
 
 }else{
