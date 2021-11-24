@@ -8,7 +8,9 @@ module.exports = app => {
 
   // Retrieve all Tutorials
   router.get("/", general.findAll);
-
+  router.get("/nextID", general.nextID);
+  router.get("/getSimpleStatment", general.getSimpleStatment);
+  router.get("/getDashboardAmountByCategory", general.getDashboardAmountByCategory);
   // // Retrieve all published Tutorials
   // router.get("/published", customers.findAllPublished);
 

@@ -30,8 +30,12 @@ app.get("/", (req, res) => {
 
  require("./app/routes/auth.routes")(app);
  require("./app/routes/general.routes")(app);
-
-require("./app/routes/customer.routes")(app);
+ require("./app/routes/subaccount.routes")(app);
+ require("./app/routes/tax.routes")(app);
+ require("./app/routes/paymentType.routes")(app);
+ require("./app/routes/subaccount.routes")(app);
+ require("./app/routes/company.routes")(app);
+ require("./app/routes/transaction.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
