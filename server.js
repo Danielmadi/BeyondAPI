@@ -3,12 +3,14 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const basicAuth = require('./app/_helpers/basic-auth');
 const errorHandler = require('./app/_helpers/error-handler');
+const compression = require("compression");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(compression());
 // use basic HTTP auth to secure the api
 app.use(basicAuth);
 // api routes
